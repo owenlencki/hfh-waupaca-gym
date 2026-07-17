@@ -1,0 +1,6 @@
+.DS_Store
+**/.DS_Store
+.claude/
+# Internal Vaelro methodology — never publish to a client/public repo
+VAELRO_WEBSITE_BUILD_RULES*.md
+scratchpad/

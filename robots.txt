@@ -1,0 +1,37 @@
+# Health and Fitness Headquarters — Waupaca, WI
+# AI + search retrieval is allowed by default (Vaelro build rules §12).
+
+User-agent: *
+Allow: /
+
+# --- AI search / answer engines ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Controls Gemini / AI Overviews grounding
+User-agent: Google-Extended
+Allow: /
+
+# A large share of ChatGPT Search draws on Bing's index
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://www.hfhonline.com/sitemap.xml
