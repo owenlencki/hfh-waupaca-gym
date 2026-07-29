@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page Not Found | Health and Fitness Headquarters</title>
+<meta name="description" content="That page doesn't exist. Head back to Health and Fitness Headquarters, a locally owned community gym in Waupaca, WI, or call 715-256-1459." />
+<meta name="robots" content="noindex, follow" />
+<link rel="icon" href="/assets/hfh-logo.png" />
+<style>
+@font-face{font-family:'Oswald';src:url('/assets/fonts/oswald-var.woff2') format('woff2-variations');font-weight:200 700;font-display:swap}
+@font-face{font-family:'Barlow';src:url('/assets/fonts/barlow-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Barlow';src:url('/assets/fonts/barlow-600.woff2') format('woff2');font-weight:600;font-display:swap}
+:root{
+  --red-700:#C20704; --red-800:#9c0603; --red-400:#f0736d;
+  --n-0:#fff; --n-100:#f5f4f2; --n-600:#6b6864; --n-900:#16181a; --n-950:#0c0c0c;
+  --radius-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Barlow',Arial,sans-serif;background:var(--n-950);color:var(--n-0);
+  min-height:100svh;display:flex;align-items:center;justify-content:center;
+  padding:32px 24px;text-align:center;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:560px}
+img.logo{height:52px;width:auto;margin:0 auto 40px;display:block}
+.code{
+  font-family:'Oswald',Arial Narrow,sans-serif;font-size:clamp(4rem,18vw,7rem);
+  font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--red-400);
+}
+h1{
+  font-family:'Oswald',Arial Narrow,sans-serif;font-size:clamp(1.5rem,5vw,2.074rem);
+  font-weight:700;text-transform:uppercase;letter-spacing:-.01em;
+  line-height:1.15;margin-top:16px;
+}
+p{font-size:1rem;line-height:1.6;color:#b9bbbd;margin-top:16px}
+.btns{display:flex;gap:16px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'Oswald',Arial Narrow,sans-serif;font-weight:600;font-size:1rem;
+  text-transform:uppercase;letter-spacing:.04em;text-decoration:none;
+  padding:12px 32px;min-height:48px;border-radius:var(--radius-sm);
+  transition:background .25s cubic-bezier(.16,.84,.44,1),color .25s cubic-bezier(.16,.84,.44,1);
+}
+.btn-red{background:var(--red-700);color:var(--n-0)}
+.btn-red:hover{background:var(--red-800)}
+.btn-ghost{background:transparent;color:var(--n-0);border:2px solid rgba(255,255,255,.65)}
+.btn-ghost:hover{background:var(--n-0);color:var(--n-900)}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--n-0);outline-offset:2px}
+.meta{margin-top:40px;font-size:.833rem;color:#8a8d90;line-height:1.7}
+.meta a{color:#b9bbbd}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <img class="logo" src="/assets/hfh-logo.png" width="784" height="138" alt="Health and Fitness Headquarters" />
+    <div class="code">404</div>
+    <h1>That Page Took a Rest Day</h1>
+    <p>We couldn't find the page you're looking for. It may have moved, or the link might be out of date.</p>
+    <div class="btns">
+      <a href="/" class="btn btn-red">Back to Home</a>
+      <a href="tel:+17152561459" class="btn btn-ghost">Call 715-256-1459</a>
+    </div>
+    <p class="meta">
+      Health and Fitness Headquarters · N2610 Highway 22, Waupaca, WI 54981<br>
+      Staffed hours: Mon–Thu 7–6 · Fri 7–3 · Sat 7–Noon ·
+      <a href="/#faq">Common questions</a>
+    </p>
+  </main>
+</body>
+</html>
