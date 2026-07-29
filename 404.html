@@ -23,7 +23,13 @@ body{
   padding:32px 24px;text-align:center;-webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:560px}
-img.logo{height:52px;width:auto;margin:0 auto 40px;display:block}
+/* The logo artwork is dark-on-transparent, so it needs a light panel on
+   this dark background — same treatment the site footer uses. */
+.logo-plate{
+  background:var(--n-0);border-radius:var(--radius-sm);
+  padding:14px 16px;display:inline-block;margin:0 auto 40px;
+}
+.logo-plate img{height:46px;width:auto;display:block}
 .code{
   font-family:'Oswald',Arial Narrow,sans-serif;font-size:clamp(4rem,18vw,7rem);
   font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--red-400);
@@ -54,7 +60,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--n-0);outline-offset:2
 </head>
 <body>
   <main class="wrap">
-    <img class="logo" src="/assets/hfh-logo.png" width="784" height="138" alt="Health and Fitness Headquarters" />
+    <span class="logo-plate"><img src="/assets/hfh-logo.png" width="784" height="138" alt="Health and Fitness Headquarters" /></span>
     <div class="code">404</div>
     <h1>That Page Took a Rest Day</h1>
     <p>We couldn't find the page you're looking for. It may have moved, or the link might be out of date.</p>
