@@ -1,0 +1,30 @@
+# Cloudflare Pages headers (also honoured by Netlify; ignored by GitHub Pages)
+
+# HTML must revalidate so content edits go live immediately.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Fonts are stable, name-versioned and self-hosted — safe to cache hard.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images use stable (non-hashed) filenames and the handoff flags several
+# demo-grade shots for replacement before launch — so cache a week, not a
+# year, or swapped photos would be stranded in browser caches.
+/assets/img/*
+  Cache-Control: public, max-age=604800
+
+/assets/hfh-logo.png
+  Cache-Control: public, max-age=604800
+
+# Crawler-facing files should stay fresh.
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sitemap.xml
+  Cache-Control: public, max-age=3600
