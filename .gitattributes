@@ -1,0 +1,6 @@
+# Excluded from `git archive` — i.e. from the clean export we deploy to
+# Cloudflare Pages. `wrangler pages deploy` uploads a whole directory and
+# ignores .gitignore, so anything reachable in the export becomes publicly
+# fetchable. These paths belong in the repo but must never be served.
+apps-script/    export-ignore
+.gitattributes  export-ignore

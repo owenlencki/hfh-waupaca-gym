@@ -713,6 +713,90 @@ section{position:relative}
 .loc-strip .tile{height:200px}
 
 /* ============================================================
+   CONTACT FORM
+   ============================================================ */
+#contact{background:var(--color-surface)}
+.contact-shell{
+  display:grid;grid-template-columns:1fr 1.15fr;gap:var(--sp-10);
+  align-items:start;margin-top:var(--sp-8);
+}
+.contact-aside .eyebrow{color:var(--color-accent)}
+.contact-aside h2{font-size:var(--fs-h2);color:var(--color-text);margin:var(--sp-4) 0 0}
+.contact-aside h2 .r{color:var(--color-accent)}
+.contact-aside p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--color-text-secondary);margin-top:var(--sp-4)}
+.contact-direct{margin-top:var(--sp-6);padding-top:var(--sp-6);border-top:1px solid var(--color-border);display:flex;flex-direction:column;gap:var(--sp-4)}
+.contact-direct .cd-row{display:flex;gap:var(--sp-4);align-items:flex-start;font-size:var(--fs-base);line-height:1.5}
+.contact-direct .cd-row b{display:block;font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-secondary);font-weight:600;margin-bottom:2px}
+.contact-direct .ico{
+  width:38px;height:38px;border-radius:var(--radius-sm);background:var(--color-surface-sunken);
+  color:var(--color-accent);display:flex;align-items:center;justify-content:center;
+  font-size:17px;flex-shrink:0;
+}
+.contact-direct a{
+  color:var(--color-accent);font-weight:600;text-decoration:underline;text-underline-offset:2px;
+  display:inline-block;padding:4px 0;
+}
+
+/* the form card */
+.contact-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:var(--sp-8);
+}
+.cf-field{display:flex;flex-direction:column;gap:var(--sp-2);margin-bottom:var(--sp-5)}
+.cf-field label{
+  font-family:var(--font-display);font-size:var(--fs-xs);font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--color-text);
+}
+.cf-field label .opt{color:var(--color-text-muted);font-weight:500;letter-spacing:.04em}
+/* browser defaults fully overridden: own height, border, padding, radius (§5) */
+.cf-field input,.cf-field textarea{
+  font-family:var(--font-body);font-size:var(--fs-base);line-height:1.5;color:var(--color-text);
+  background:var(--color-surface);border:1px solid var(--color-border-strong);
+  border-radius:var(--radius-sm);padding:var(--sp-3) var(--sp-4);min-height:48px;width:100%;
+  transition:border-color var(--dur-base) var(--ease-out);
+}
+.cf-field textarea{min-height:132px;resize:vertical}
+.cf-field input::placeholder,.cf-field textarea::placeholder{color:var(--color-text-muted)}
+.cf-field input:hover,.cf-field textarea:hover{border-color:var(--color-text-secondary)}
+.cf-field input:focus-visible,.cf-field textarea:focus-visible{
+  outline:2px solid var(--color-accent);outline-offset:2px;border-color:var(--color-accent);
+}
+/* error state: border + icon-free text message, never colour alone (§14) */
+.cf-field.has-error input,.cf-field.has-error textarea{border-color:var(--color-error)}
+.cf-err{font-size:var(--fs-xs);font-weight:600;color:var(--color-error);display:none}
+.cf-field.has-error .cf-err{display:block}
+
+/* honeypot: off-screen, not display:none — bots still see and fill it */
+.cf-hp{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+.cf-actions{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-6)}
+.cf-submit{width:100%}
+.cf-submit[disabled]{opacity:.72;cursor:not-allowed}
+.cf-submit[disabled]:hover::before{transform:scaleX(0)}
+/* spinner rotates a transform only (§9) */
+.cf-spin{
+  width:16px;height:16px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(255,255,255,.4);border-top-color:var(--n-0);
+  animation:cfSpin 700ms linear infinite;
+}
+@keyframes cfSpin{to{transform:rotate(360deg)}}
+.cf-privacy{font-size:var(--fs-xs);color:var(--color-text-muted);text-align:center}
+
+/* result banners */
+.cf-result{display:none;gap:var(--sp-3);align-items:flex-start;padding:var(--sp-4) var(--sp-5);border-radius:var(--radius-sm);margin-bottom:var(--sp-5);font-size:var(--fs-base);line-height:1.5}
+.cf-result.show{display:flex}
+.cf-result .ic{flex-shrink:0;font-size:20px;margin-top:2px}
+.cf-result.ok{background:var(--green-50);border:1px solid var(--green-200);color:var(--green-800)}
+.cf-result.ok .ic{color:var(--color-success)}
+.cf-result.bad{background:var(--red-50);border:1px solid var(--red-200);color:var(--red-900)}
+.cf-result.bad .ic{color:var(--color-error)}
+.cf-result b{display:block;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.04em;font-size:var(--fs-base);margin-bottom:2px}
+.cf-result a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+/* ============================================================
    REVIEWS
    ============================================================ */
 #reviews{background:var(--color-bg);overflow:hidden}
@@ -849,7 +933,7 @@ section{position:relative}
 .foot-credit a:hover{color:var(--n-0)}
 
 /* ============================================================
-   STICKY CALL FAB (mobile click-to-call, §5/§10)
+   STICKY MESSAGE FAB (jumps to the contact form, §5/§10)
    ============================================================ */
 #fab{
   position:fixed;right:22px;bottom:22px;z-index:900;
@@ -878,7 +962,7 @@ section{position:relative}
 }
 @media(max-width:680px){
   /* On phones the logo + hamburger own the bar; "Join Now" lives in the
-     drawer and hero, and the sticky call FAB is the persistent CTA (§10). */
+     drawer and hero, and the sticky message FAB is the persistent CTA (§10). */
   .nav-cta .btn{display:none}
 }
 @media(max-width:1024px){
@@ -888,6 +972,7 @@ section{position:relative}
 }
 @media(max-width:900px){
   .about-grid,.train-grid,.fac-split{grid-template-columns:1fr;gap:var(--sp-8)}
+  .contact-shell{grid-template-columns:1fr;gap:var(--sp-8)}
   .loc-single{grid-template-columns:1fr}
   .loc-map{min-height:300px}
   .class-grid{grid-template-columns:repeat(2,1fr)}
@@ -910,6 +995,7 @@ section{position:relative}
   .foot-grid{grid-template-columns:1fr 1fr;gap:var(--sp-6)}
   .train-copy{padding:var(--sp-8) var(--sp-5)}
   .loc-info{padding:var(--sp-6) var(--sp-5)}
+  .contact-card{padding:var(--sp-5)}
   .rev-card{flex:0 0 100%;padding:var(--sp-5)}
   .hero-trust{gap:var(--sp-3)}
   .hero-trust .sep{display:none}
@@ -950,6 +1036,7 @@ section{position:relative}
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
   <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
@@ -982,6 +1069,7 @@ section{position:relative}
       <a href="#training" class="nav-link">Training</a>
       <a href="#tanning" class="nav-link">Tanning</a>
       <a href="#locations" class="nav-link">Visit</a>
+      <a href="#contact" class="nav-link">Contact</a>
       <a href="#faq" class="nav-link">FAQ</a>
     </nav>
     <div class="nav-cta">
@@ -1001,6 +1089,7 @@ section{position:relative}
   <a href="#training">Training</a>
   <a href="#tanning">Tanning</a>
   <a href="#locations">Visit</a>
+  <a href="#contact">Contact</a>
   <a href="#faq">FAQ</a>
   <a href="#join" class="mm-join">Join Now</a>
 </div>
@@ -1357,6 +1446,92 @@ section{position:relative}
   </div>
 </section>
 
+<!-- ===== CONTACT (form -> Apps Script) ===== -->
+<section id="contact" class="sec">
+  <div class="wrap">
+    <div class="contact-shell">
+
+      <div class="contact-aside" data-aos="fade-right">
+        <span class="eyebrow">Get in Touch</span>
+        <h2>Send Us a <span class="r">Message</span></h2>
+        <p>Questions about memberships, class blocks or personal training? Send a note and we'll get back to you during staffed hours. Prefer to talk it through? Give the front desk a call.</p>
+        <div class="contact-direct">
+          <div class="cd-row">
+            <span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></span>
+            <span><b>Call the Front Desk</b><a href="tel:+17152561459">715-256-1459</a></span>
+          </div>
+          <div class="cd-row">
+            <span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span>
+            <span><b>Email</b><a href="mailto:randy@hfhonline.com">randy@hfhonline.com</a></span>
+          </div>
+          <div class="cd-row">
+            <span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span>
+            <span><b>Stop In</b>N2610 Highway 22<br>Waupaca, WI 54981</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card" data-aos="fade-left">
+        <!-- status region lives above the fields so the result is announced and seen -->
+        <div class="cf-result ok" id="cf-ok" role="status" aria-live="polite">
+          <svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg>
+          <span><b>Message sent</b>Thanks for reaching out — we'll get back to you during staffed hours.</span>
+        </div>
+        <div class="cf-result bad" id="cf-bad" role="alert">
+          <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
+          <span><b>That didn't go through</b>Something went wrong sending your message. Please call us at <a href="tel:+17152561459">715-256-1459</a> and we'll take care of you.</span>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div class="cf-field" id="cf-f-name">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" autocomplete="name"
+                   placeholder="Your name" required
+                   aria-describedby="cf-e-name" />
+            <span class="cf-err" id="cf-e-name">Please enter your name.</span>
+          </div>
+
+          <div class="cf-field" id="cf-f-email">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" autocomplete="email"
+                   inputmode="email" placeholder="you@example.com" required
+                   aria-describedby="cf-e-email" />
+            <span class="cf-err" id="cf-e-email">Please enter a valid email address.</span>
+          </div>
+
+          <div class="cf-field" id="cf-f-phone">
+            <label for="cf-phone">Phone <span class="opt">(optional)</span></label>
+            <input type="tel" id="cf-phone" name="phone" autocomplete="tel"
+                   inputmode="tel" placeholder="715-000-0000" />
+          </div>
+
+          <div class="cf-field" id="cf-f-message">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5"
+                      placeholder="Tell us what you're looking for — membership, classes, training or tanning."
+                      required aria-describedby="cf-e-message"></textarea>
+            <span class="cf-err" id="cf-e-message">Please tell us how we can help.</span>
+          </div>
+
+          <!-- honeypot: off-screen and out of the tab order. Humans never fill it. -->
+          <div class="cf-hp" aria-hidden="true">
+            <label for="cf-website">Website</label>
+            <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="cf-actions">
+            <button type="submit" class="btn btn-red cf-submit" id="cf-submit">
+              <span id="cf-submit-label">Send Message</span>
+            </button>
+            <p class="cf-privacy">We never share your information.</p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ===== REVIEWS (proof) ===== -->
 <section id="reviews" class="sec">
   <div class="wrap">
@@ -1546,13 +1721,21 @@ section{position:relative}
   </div>
 </footer>
 
-<a href="tel:+17152561459" id="fab" aria-label="Call Health and Fitness Headquarters at 715-256-1459">
-  <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
+<a href="#contact" id="fab" aria-label="Send us a message">
+  <svg class="ic" aria-hidden="true"><use href="#i-message"/></svg>
 </a>
 
 <script>
 (function(){
   'use strict';
+
+  /* ============================================================
+     CONTACT FORM ENDPOINT
+     Paste the Apps Script Web App URL here after deploying
+     /apps-script/Code.gs (see /apps-script/README.md).
+     ============================================================ */
+  var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyMmiBeua_GRrmKiTDFb-zjY54NY29VMbqaJZkafdgB8mi2jIkHdMN-ttxN4XOr10OdTw/exec';
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.addEventListener('DOMContentLoaded', function(){
@@ -1697,6 +1880,146 @@ section{position:relative}
         clearTimeout(rt); rt = setTimeout(layout, 150);
       });
       layout();
+    })();
+
+    /* ---- contact form -> Apps Script ---- */
+    (function(){
+      var form = document.getElementById('contact-form');
+      if(!form) return;
+
+      var submit    = document.getElementById('cf-submit');
+      var label     = document.getElementById('cf-submit-label');
+      var okBanner  = document.getElementById('cf-ok');
+      var badBanner = document.getElementById('cf-bad');
+
+      /* single source of truth for the field values — inputs read from and
+         write back to this, so the DOM never drifts from the payload */
+      var formData = { name:'', email:'', phone:'', message:'', website:'' };
+
+      /* status: 'idle' | 'submitting' */
+      var status = 'idle';
+
+      var FIELDS = {
+        name:    { input:'cf-name',    wrap:'cf-f-name' },
+        email:   { input:'cf-email',   wrap:'cf-f-email' },
+        phone:   { input:'cf-phone',   wrap:'cf-f-phone' },
+        message: { input:'cf-message', wrap:'cf-f-message' },
+        website: { input:'cf-website', wrap:null }
+      };
+
+      /* keep formData in sync on every keystroke, and clear a field's error
+         as soon as the visitor starts fixing it */
+      Object.keys(FIELDS).forEach(function(key){
+        var el = document.getElementById(FIELDS[key].input);
+        if(!el) return;
+        el.value = formData[key];
+        el.addEventListener('input', function(){
+          formData[key] = el.value;
+          if(FIELDS[key].wrap){
+            var wrap = document.getElementById(FIELDS[key].wrap);
+            if(wrap && wrap.classList.contains('has-error')){
+              wrap.classList.remove('has-error');
+              el.removeAttribute('aria-invalid');
+            }
+          }
+        });
+      });
+
+      function setFieldError(key, hasError){
+        if(!FIELDS[key] || !FIELDS[key].wrap) return;
+        var wrap = document.getElementById(FIELDS[key].wrap);
+        var el   = document.getElementById(FIELDS[key].input);
+        if(!wrap) return;
+        wrap.classList.toggle('has-error', hasError);
+        if(el){
+          if(hasError) el.setAttribute('aria-invalid', 'true');
+          else el.removeAttribute('aria-invalid');
+        }
+      }
+
+      /* deliberately loose: something@something.tld, no exotic edge cases */
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      /* the honeypot is never validated client-side — the server decides */
+      function validate(){
+        var invalid = [];
+        if(!formData.name.trim())                     invalid.push('name');
+        if(!EMAIL_RE.test(formData.email.trim()))      invalid.push('email');
+        if(!formData.message.trim())                   invalid.push('message');
+
+        ['name','email','message'].forEach(function(key){
+          setFieldError(key, invalid.indexOf(key) !== -1);
+        });
+        return invalid;
+      }
+
+      function setStatus(next){
+        status = next;
+        var sending = next === 'submitting';
+        submit.disabled = sending;
+        label.textContent = sending ? 'Sending…' : 'Send Message';
+        var spin = submit.querySelector('.cf-spin');
+        if(sending && !spin){
+          spin = document.createElement('span');
+          spin.className = 'cf-spin';
+          submit.insertBefore(spin, label);
+        } else if(!sending && spin){
+          spin.parentNode.removeChild(spin);
+        }
+      }
+
+      function showResult(kind){
+        okBanner.classList.toggle('show',  kind === 'ok');
+        badBanner.classList.toggle('show', kind === 'bad');
+      }
+
+      function resetForm(){
+        Object.keys(FIELDS).forEach(function(key){
+          formData[key] = '';
+          var el = document.getElementById(FIELDS[key].input);
+          if(el) el.value = '';
+          setFieldError(key, false);
+        });
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(status === 'submitting') return;
+
+        showResult(null);
+
+        var invalid = validate();
+        if(invalid.length){
+          var first = document.getElementById(FIELDS[invalid[0]].input);
+          if(first) first.focus();
+          return;
+        }
+
+        setStatus('submitting');
+
+        /* No Content-Type header on purpose. Unset makes the browser send
+           text/plain;charset=UTF-8 — a CORS-simple request, so there is no
+           preflight. Apps Script does not answer OPTIONS preflights, so
+           setting application/json here would break the submission. */
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: JSON.stringify(formData)
+        })
+        .then(function(res){
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function(data){
+          if(!data || data.ok !== true) throw new Error(data && data.message || 'Rejected');
+          setStatus('idle');
+          resetForm();
+          showResult('ok');
+        })
+        .catch(function(){
+          setStatus('idle');
+          showResult('bad');
+        });
+      });
     })();
   });
 })();
