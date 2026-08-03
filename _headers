@@ -14,9 +14,9 @@
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Images use stable (non-hashed) filenames and the handoff flags several
-# demo-grade shots for replacement before launch — so cache a week, not a
-# year, or swapped photos would be stranded in browser caches.
+# Images use stable (non-hashed) filenames, and some shots are still slated
+# for a higher-resolution reshoot, so cache a week rather than a year or a
+# swapped photo would be stranded in browser caches.
 /assets/img/*
   Cache-Control: public, max-age=604800
 
