@@ -1508,7 +1508,7 @@ section{position:relative}
   </div>
 </section>
 
-<!-- ===== INQUIRY FORM (posts to the /api/inquiry Pages Function) ===== -->
+<!-- ===== INQUIRY FORM (posts to the Google Apps Script web app) ===== -->
 <section id="contact" class="sec">
   <div class="wrap">
     <div class="contact-shell">
@@ -1803,8 +1803,10 @@ section{position:relative}
 (function(){
   'use strict';
 
-  /* The inquiry form posts to /api/inquiry, served by the Pages Function in
-     functions/api/inquiry.js. Same origin, so no CORS and no secrets here. */
+  /* The inquiry form posts to a Google Apps Script web app. The script itself
+     lives only in the Apps Script editor, never in this repo. Nothing secret
+     is exposed here: the /exec URL is a public endpoint by design. */
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMmiBeua_GRrmKiTDFb-zjY54NY29VMbqaJZkafdgB8mi2jIkHdMN-ttxN4XOr10OdTw/exec';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1963,7 +1965,7 @@ section{position:relative}
       layout();
     })();
 
-    /* ---- inquiry form -> /api/inquiry ---- */
+    /* ---- inquiry form -> Apps Script web app ---- */
     (function(){
       var form = document.getElementById('contact-form');
       if(!form) return;
@@ -2092,37 +2094,40 @@ section{position:relative}
           email:   formData.email.trim(),
           phone:   formData.phone.trim(),
           message: formData.message.trim(),
-          website: formData.website,               /* honeypot, server decides */
-          turnstileToken: turnstileToken()
+          website: formData.website                /* honeypot, the script decides */
         };
 
-        fetch('/api/inquiry', {
+        /* No headers object, deliberately. Setting Content-Type to
+           application/json makes this a preflighted request, and Apps Script
+           cannot answer the OPTIONS preflight, so the send fails outright.
+           Without it the browser sends text/plain, which is a simple request:
+           no preflight, and the JSON response still parses fine. */
+        fetch(APPS_SCRIPT_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         })
-        .then(function(res){
-          return res.json().catch(function(){ throw new Error('Bad JSON'); })
-            .then(function(data){
-              if(!res.ok || !data || data.ok !== true){
-                throw new Error((data && data.error) || ('HTTP ' + res.status));
-              }
-              return data;
-            });
-        })
-        .then(function(){
+        .then(function(res){ return res.json(); })
+        .then(function(data){
+          /* Apps Script answers 200 even for errors it handled itself, so the
+             HTTP status says nothing. "ok" is the only signal that counts.
+             A network failure or unparseable body falls through to .catch()
+             and is treated exactly like ok:false. */
+          if(!data || data.ok !== true){
+            throw new Error((data && data.error) || 'Send failed');
+          }
           setStatus('idle');
           replaceFormWithSuccess();
           if(typeof window.gtag === 'function'){
             window.gtag('event', 'generate_lead', {
               form_id: 'inquiry',
-              form_destination: '/api/inquiry'
+              form_destination: 'apps-script'
             });
           }
         })
         .catch(function(){
+          /* setStatus('idle') re-enables the button; the form is never hidden
+             on this path, so everything the visitor typed is still there. */
           setStatus('idle');
-          resetTurnstile();
           showResult('bad');
           badBanner.setAttribute('tabindex', '-1');
           badBanner.focus();
