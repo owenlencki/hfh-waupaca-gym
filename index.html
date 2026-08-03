@@ -32,6 +32,33 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/oswald-var.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-400.woff2" crossorigin />
 
+<!-- ============================================================
+     ANALYTICS
+     Both IDs are placeholders. Sits after the preloads so the LCP
+     hero keeps priority; both tags load async and block nothing.
+
+     TODO(analytics): replace G-XXXXXXXXXX with the real GA4 measurement ID
+     (both occurrences), then in GA4 mark generate_lead and click_to_call as
+     Key Events so they count as conversions.
+     ============================================================ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- TODO(analytics): replace CLARITY_PROJECT_ID with the real Microsoft
+     Clarity project ID. -->
+<script>
+  (function(c,l,a,r,i,t,y){
+    c[a] = c[a] || function(){ (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, 'clarity', 'script', 'CLARITY_PROJECT_ID');
+</script>
+
 <link rel="icon" href="assets/hfh-logo.png" />
 <link rel="apple-touch-icon" href="assets/hfh-logo.png" />
 
@@ -1840,6 +1867,17 @@ section{position:relative}
       if(e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true'){
         setMenu(false); burger.focus();
       }
+    });
+
+    /* ---- analytics: every tel: link reports a click_to_call ---- */
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
+      a.addEventListener('click', function(){
+        if(typeof window.gtag !== 'function') return;
+        window.gtag('event', 'click_to_call', {
+          link_url:  a.getAttribute('href'),
+          link_text: (a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 100)
+        });
+      });
     });
 
     /* ---- smooth anchor scroll ---- */
