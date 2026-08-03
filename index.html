@@ -1579,8 +1579,8 @@ section{position:relative}
 
           <!-- honeypot: off-screen and out of the tab order. Humans never fill it. -->
           <div class="cf-hp" aria-hidden="true">
-            <label for="cf-website">Website</label>
-            <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" />
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
           <!-- TODO(turnstile): swap data-sitekey for the real Cloudflare Turnstile
@@ -1987,7 +1987,7 @@ section{position:relative}
         email:   { input:'cf-email',   wrap:'cf-f-email' },
         phone:   { input:'cf-phone',   wrap:'cf-f-phone' },
         message: { input:'cf-message', wrap:'cf-f-message' },
-        website: { input:'cf-website', wrap:null }
+        website: { input:'website',    wrap:null }
       };
 
       /* keep formData in sync on every keystroke, and clear a field's error
