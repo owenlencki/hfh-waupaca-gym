@@ -34,4 +34,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://www.hfhonline.com/sitemap.xml
+Sitemap: https://hfhonline.com/sitemap.xml
