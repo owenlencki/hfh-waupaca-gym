@@ -12,7 +12,7 @@
 <meta property="og:type" content="business.business" />
 <meta property="og:title" content="Gym in Waupaca, WI | Health and Fitness Headquarters" />
 <meta property="og:description" content="Locally owned community gym in Waupaca, WI. Cardio, free weights, functional training, group classes, personal training and tanning." />
-<meta property="og:image" content="https://www.hfhonline.com/assets/img/hero-functional-studio-1280.webp" />
+<meta property="og:image" content="https://www.hfhonline.com/assets/img/hero-exterior-1280.webp" />
 <meta property="og:image:width" content="1280" />
 <meta property="og:image:height" content="960" />
 <meta property="og:image:alt" content="The functional-training studio at Health and Fitness Headquarters in Waupaca, WI" />
@@ -22,8 +22,8 @@
 <meta name="twitter:card" content="summary_large_image" />
 
 <!-- Preload LCP hero image + critical fonts -->
-<link rel="preload" as="image" href="assets/img/hero-functional-studio-1920.webp"
-      imagesrcset="assets/img/hero-functional-studio-1280.webp 1280w, assets/img/hero-functional-studio-1920.webp 1920w, assets/img/hero-functional-studio-2560.webp 2560w"
+<link rel="preload" as="image" href="assets/img/hero-exterior-1280.webp"
+      imagesrcset="assets/img/hero-exterior-640.webp 640w, assets/img/hero-exterior-960.webp 960w, assets/img/hero-exterior-1280.webp 1280w, assets/img/hero-exterior-1448.webp 1448w"
       imagesizes="100vw" fetchpriority="high" />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/oswald-var.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-400.woff2" crossorigin />
@@ -41,7 +41,7 @@
   "alternateName": "HFH",
   "description": "Locally owned community gym in Waupaca, WI offering cardio, free weights, functional training, group fitness classes, personal training and tanning.",
   "url": "https://www.hfhonline.com/",
-  "image": "https://www.hfhonline.com/assets/img/hero-functional-studio-1280.webp",
+  "image": "https://www.hfhonline.com/assets/img/hero-exterior-1280.webp",
   "logo": "https://www.hfhonline.com/assets/hfh-logo.png",
   "telephone": "+1-715-256-1459",
   "email": "randy@hfhonline.com",
@@ -450,7 +450,11 @@ section{position:relative}
 .hero-media{position:absolute;inset:0;z-index:0}
 .hero-media img{
   width:100%;height:100%;object-fit:cover;
-  transform-origin:60% 50%;
+  /* Focal point: the gable sign + entrance. Biased above centre so wide
+     desktop crops keep the sign, and the portrait mobile crop (which only
+     shows the middle ~35% of the frame) lands on the doors. */
+  object-position:50% 35%;
+  transform-origin:50% 35%;
   animation:kenBurns 34s var(--ease-in-out) infinite alternate;
 }
 @keyframes kenBurns{0%{transform:scale(1.02)}100%{transform:scale(1.09)}}
@@ -1099,13 +1103,14 @@ section{position:relative}
 <!-- ===== HERO ===== -->
 <section id="hero" class="hero">
   <div class="hero-media">
-    <img src="assets/img/hero-functional-studio-1920.webp"
-         srcset="assets/img/hero-functional-studio-1280.webp 1280w,
-                 assets/img/hero-functional-studio-1920.webp 1920w,
-                 assets/img/hero-functional-studio-2560.webp 2560w"
-         sizes="100vw" width="1920" height="1440"
+    <img src="assets/img/hero-exterior-1280.webp"
+         srcset="assets/img/hero-exterior-640.webp 640w,
+                 assets/img/hero-exterior-960.webp 960w,
+                 assets/img/hero-exterior-1280.webp 1280w,
+                 assets/img/hero-exterior-1448.webp 1448w"
+         sizes="100vw" width="1448" height="1086"
          fetchpriority="high" decoding="async"
-         alt="The functional-training studio at Health and Fitness Headquarters gym in Waupaca, WI" />
+         alt="Health and Fitness Headquarters building exterior in Waupaca, Wisconsin" />
   </div>
   <div class="hero-inner">
     <span class="eyebrow">Locally Owned · Waupaca, WI</span>
