@@ -581,6 +581,11 @@ section{position:relative}
 .fac-split{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--sp-8);align-items:center;margin-bottom:var(--sp-10)}
 .fac-split .copy h3{font-size:var(--fs-h3);color:var(--color-text);margin:var(--sp-3) 0 0}
 .fac-split .copy p{font-size:var(--fs-base);line-height:1.7;color:var(--color-text-secondary);margin-top:var(--sp-4);max-width:66ch}
+/* Copy-only sibling of .fac-split .copy — the express-workout write-up sits
+   above the mosaic that carries its photo, so it needs no media column. */
+.fac-note{margin-bottom:var(--sp-10)}
+.fac-note h3{font-size:var(--fs-h3);color:var(--color-text);margin:var(--sp-3) 0 0}
+.fac-note p{font-size:var(--fs-base);line-height:1.7;color:var(--color-text-secondary);margin-top:var(--sp-4);max-width:66ch}
 .fac-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xl)}
 .fac-media img{width:100%;height:420px;object-fit:cover}
 .fac-media .tag{
@@ -1198,6 +1203,12 @@ section{position:relative}
       </div>
     </div>
 
+    <div class="fac-note" data-aos="fade-up">
+      <span class="eyebrow">Hydraulic Circuit</span>
+      <h3>Express Workout</h3>
+      <p>Short on time? Our hydraulic circuit is a quick, effective workout on resistance machines that adjust to you. No plates to load and no settings to fuss with. Move station to station at your own pace and get on with your day.</p>
+    </div>
+
     <div class="gallery">
       <div class="tile w2 h2" data-aos="fade-up">
         <img loading="lazy" decoding="async"
@@ -1233,8 +1244,8 @@ section{position:relative}
         <img loading="lazy" decoding="async"
              src="assets/img/recovery-bikes-673.webp" width="673" height="481"
              sizes="(max-width:680px) 50vw, (max-width:1024px) 50vw, 25vw"
-             alt="Recovery lounge with recumbent and spin bikes at HFH gym in Waupaca, WI" />
-        <div class="cap"><div class="t">Recovery Lounge</div><div class="s">Recumbent &amp; spin bikes</div></div>
+             alt="Hydraulic circuit resistance machines in the express workout area at HFH gym in Waupaca, WI" />
+        <div class="cap"><div class="t">Express Workout</div><div class="s">Hydraulic circuit</div></div>
       </div>
       <div class="tile h2" data-aos="fade-up" data-aos-delay="60">
         <img loading="lazy" decoding="async"
