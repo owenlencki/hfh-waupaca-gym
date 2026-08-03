@@ -31,7 +31,13 @@
 <link rel="icon" href="assets/hfh-logo.png" />
 <link rel="apple-touch-icon" href="assets/hfh-logo.png" />
 
-<!-- LocalBusiness structured data (feeds Google's local pack) -->
+<!-- LocalBusiness structured data (feeds Google's local pack)
+     TODO(geo): add a "geo" property once the real coordinates are read off the
+     Google Business Profile (GBP > right-click the pin in Google Maps > copy
+     lat/long). Deliberately omitted rather than guessed: a wrong pin is worse
+     than an absent one. Shape:
+       "geo": { "@type": "GeoCoordinates", "latitude": 00.000000, "longitude": -00.000000 },
+-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,9 +64,9 @@
   "areaServed": { "@type": "City", "name": "Waupaca", "containedInPlace": { "@type": "State", "name": "Wisconsin" } },
   "sameAs": ["https://www.facebook.com/healthandfitnessheadquarters/"],
   "openingHoursSpecification": [
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "07:00", "closes": "18:00" },
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "15:00" },
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "12:00" }
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00", "closes": "23:59" }
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -115,13 +121,13 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Where is Health and Fitness Headquarters located?",
-      "acceptedAnswer": { "@type": "Answer", "text": "HFH is at N2610 Highway 22 in Waupaca, WI 54981, just off the main highway. We are a locally owned community gym serving Waupaca and the surrounding area. Stop in during staffed hours and we will show you around, or call 715-256-1459 for directions." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "HFH is at N2610 Highway 22 in Waupaca, WI 54981, just off the main highway. We're a locally owned community gym serving Waupaca and the surrounding area. Stop in during staffed hours and we'll show you around, or call 715-256-1459 for directions." } },
     { "@type": "Question", "name": "What are your staffed hours?",
       "acceptedAnswer": { "@type": "Answer", "text": "Members have 24-hour access to HFH, so you can train on your own schedule. Staffed hours are Monday through Thursday 7:00am to 6:00pm, Friday 7:00am to 3:00pm, and Saturday 7:00am to noon. Sunday is unstaffed. Call 715-256-1459 during staffed hours about memberships or class sign-ups." } },
     { "@type": "Question", "name": "How much does a membership cost?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Membership rates are not listed online. Call 715-256-1459 or stop in and we will find the right fit. HFH offers flexible monthly memberships for individuals, couples and families, all with 24-hour member access, plus day passes, a weekly option and class drop-ins for visitors to the Waupaca area." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Membership rates aren't listed online. Call 715-256-1459 or stop in and we'll find the right fit. HFH offers flexible monthly memberships for individuals, couples and families, all with 24-hour member access, plus day passes, a weekly option and class drop-ins for visitors to the Waupaca area." } },
     { "@type": "Question", "name": "Do you offer day passes for visitors?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. HFH offers day passes and a weekly option, which makes it straightforward if you are visiting the Waupaca area for a few days. Class drop-ins are available as well. Call 715-256-1459 or ask at the front desk for current day-pass and weekly rates." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. HFH offers day passes and a weekly option, which makes it straightforward if you're visiting the Waupaca area for a few days. Class drop-ins are available as well. Call 715-256-1459 or ask at the front desk for current day-pass and weekly rates." } },
     { "@type": "Question", "name": "What equipment does the gym have?",
       "acceptedAnswer": { "@type": "Answer", "text": "HFH has a full free-weight area with squat racks, benches and dumbbells, plate-loaded and selectorized strength machines, FreeMotion cable stations, a dedicated functional-training studio, and a cardio floor with treadmills, ellipticals and bikes. Locker rooms, a sauna and tanning are on site." } },
     { "@type": "Question", "name": "Do you have group fitness classes?",
