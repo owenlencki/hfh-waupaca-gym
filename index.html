@@ -12,9 +12,9 @@
 <meta property="og:type" content="business.business" />
 <meta property="og:title" content="24-Hour Gym in Waupaca | Health and Fitness Headquarters" />
 <meta property="og:description" content="Locally owned gym in Waupaca, WI with 24-hour member access. Cardio, free weights, classes, personal training, sauna and tanning. Call 715-256-1459." />
-<meta property="og:image" content="https://hfhonline.com/assets/img/hero-exterior-1280.webp" />
+<meta property="og:image" content="https://hfhonline.com/assets/img/hero-building-1280.webp" />
 <meta property="og:image:width" content="1280" />
-<meta property="og:image:height" content="960" />
+<meta property="og:image:height" content="720" />
 <meta property="og:image:alt" content="Health and Fitness Headquarters building exterior in Waupaca, Wisconsin" />
 <meta property="og:url" content="https://hfhonline.com/" />
 <meta property="og:site_name" content="Health and Fitness Headquarters" />
@@ -22,12 +22,12 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="24-Hour Gym in Waupaca | Health and Fitness Headquarters" />
 <meta name="twitter:description" content="Locally owned gym in Waupaca, WI with 24-hour member access. Cardio, free weights, classes, personal training, sauna and tanning. Call 715-256-1459." />
-<meta name="twitter:image" content="https://hfhonline.com/assets/img/hero-exterior-1280.webp" />
+<meta name="twitter:image" content="https://hfhonline.com/assets/img/hero-building-1280.webp" />
 <meta name="twitter:image:alt" content="Health and Fitness Headquarters building exterior in Waupaca, Wisconsin" />
 
 <!-- Preload LCP hero image + critical fonts -->
-<link rel="preload" as="image" href="assets/img/hero-exterior-1280.webp"
-      imagesrcset="assets/img/hero-exterior-640.webp 640w, assets/img/hero-exterior-960.webp 960w, assets/img/hero-exterior-1280.webp 1280w, assets/img/hero-exterior-1448.webp 1448w"
+<link rel="preload" as="image" href="assets/img/hero-building-1280.webp"
+      imagesrcset="assets/img/hero-building-640.webp 640w, assets/img/hero-building-960.webp 960w, assets/img/hero-building-1280.webp 1280w, assets/img/hero-building-1672.webp 1672w"
       imagesizes="100vw" fetchpriority="high" />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/oswald-var.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/barlow-400.woff2" crossorigin />
@@ -78,7 +78,7 @@
   "alternateName": "HFH",
   "description": "Locally owned community gym in Waupaca, WI offering cardio, free weights, functional training, group fitness classes, personal training and tanning.",
   "url": "https://hfhonline.com/",
-  "image": "https://hfhonline.com/assets/img/hero-exterior-1280.webp",
+  "image": "https://hfhonline.com/assets/img/hero-building-1280.webp",
   "logo": "https://hfhonline.com/assets/hfh-logo.png",
   "telephone": "+1-715-256-1459",
   "email": "randy@hfhonline.com",
@@ -495,11 +495,13 @@ section{position:relative}
 .hero-media{position:absolute;inset:0;z-index:0}
 .hero-media img{
   width:100%;height:100%;object-fit:cover;
-  /* Focal point: the gable sign + entrance. Biased above centre so wide
-     desktop crops keep the sign, and the portrait mobile crop (which only
-     shows the middle ~35% of the frame) lands on the doors. */
-  object-position:50% 35%;
-  transform-origin:50% 35%;
+  /* Focal point: the gable sign + entrance, which sit dead-centre horizontally
+     and span roughly 32-63% of the frame vertically. 50% horizontal keeps the
+     sign and doors inside the portrait mobile crop (which shows only the middle
+     ~30% of this 16:9 frame); 45% vertical biases the wide-desktop crop above
+     centre so the roofline and sign survive instead of empty parking lot. */
+  object-position:50% 45%;
+  transform-origin:50% 45%;
   animation:kenBurns 34s var(--ease-in-out) infinite alternate;
 }
 @keyframes kenBurns{0%{transform:scale(1.02)}100%{transform:scale(1.09)}}
@@ -1158,12 +1160,12 @@ section{position:relative}
 <!-- ===== HERO ===== -->
 <section id="hero" class="hero">
   <div class="hero-media">
-    <img src="assets/img/hero-exterior-1280.webp"
-         srcset="assets/img/hero-exterior-640.webp 640w,
-                 assets/img/hero-exterior-960.webp 960w,
-                 assets/img/hero-exterior-1280.webp 1280w,
-                 assets/img/hero-exterior-1448.webp 1448w"
-         sizes="100vw" width="1448" height="1086"
+    <img src="assets/img/hero-building-1280.webp"
+         srcset="assets/img/hero-building-640.webp 640w,
+                 assets/img/hero-building-960.webp 960w,
+                 assets/img/hero-building-1280.webp 1280w,
+                 assets/img/hero-building-1672.webp 1672w"
+         sizes="100vw" width="1672" height="941"
          fetchpriority="high" decoding="async"
          alt="Health and Fitness Headquarters building exterior in Waupaca, Wisconsin" />
   </div>
