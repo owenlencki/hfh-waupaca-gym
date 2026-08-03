@@ -5,3 +5,7 @@
 VAELRO_WEBSITE_BUILD_RULES*.md
 scratchpad/
 .wrangler/
+
+# Client handoff source material: original photos, flyers, videos, the design
+# brief. Never deployed and nothing in the site references it.
+hfhcontent/
