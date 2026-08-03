@@ -1,4 +1,4 @@
-# Health and Fitness Headquarters — Waupaca, WI
+# Health and Fitness Headquarters, Waupaca, WI
 # AI + search retrieval is allowed by default (Vaelro build rules §12).
 
 User-agent: *
