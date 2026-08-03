@@ -828,8 +828,6 @@ section{position:relative}
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 }
 
-/* Reserve height so the Turnstile iframe cannot shift the button on load (§13 CLS) */
-.cf-turnstile-wrap{margin-top:var(--sp-5);min-height:65px}
 .cf-actions{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-6)}
 .cf-submit{width:100%}
 .cf-submit[disabled]{opacity:.72;cursor:not-allowed}
@@ -1583,16 +1581,6 @@ section{position:relative}
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
-          <!-- TODO(turnstile): swap data-sitekey for the real Cloudflare Turnstile
-               site key before launch. 1x00000000000000000000AA is Cloudflare's
-               universal TEST key: it always passes and proves nothing. The paired
-               test secret lives in functions/api/inquiry.js env notes. -->
-          <div class="cf-turnstile-wrap">
-            <div class="cf-turnstile" id="cf-turnstile"
-                 data-sitekey="1x00000000000000000000AA"
-                 data-action="inquiry" data-theme="light"></div>
-          </div>
-
           <div class="cf-actions">
             <button type="submit" class="btn btn-red cf-submit" id="cf-submit">
               <span id="cf-submit-label">Send My Message</span>
@@ -2065,15 +2053,6 @@ section{position:relative}
         okBanner.focus();
       }
 
-      /* Turnstile hands its token to a hidden input it injects into the form. */
-      function turnstileToken(){
-        var el = form.querySelector('[name="cf-turnstile-response"]');
-        return el ? el.value : '';
-      }
-      function resetTurnstile(){
-        try { if(window.turnstile) window.turnstile.reset('#cf-turnstile'); } catch(err){}
-      }
-
       form.addEventListener('submit', function(e){
         e.preventDefault();
         if(status === 'submitting') return;
@@ -2138,7 +2117,5 @@ section{position:relative}
 })();
 </script>
 
-<!-- Turnstile: loaded last, async, and only used by the inquiry form (§20) -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>
