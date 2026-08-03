@@ -791,6 +791,8 @@ section{position:relative}
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 }
 
+/* Reserve height so the Turnstile iframe cannot shift the button on load (§13 CLS) */
+.cf-turnstile-wrap{margin-top:var(--sp-5);min-height:65px}
 .cf-actions{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-6)}
 .cf-submit{width:100%}
 .cf-submit[disabled]{opacity:.72;cursor:not-allowed}
@@ -1466,7 +1468,7 @@ section{position:relative}
   </div>
 </section>
 
-<!-- ===== CONTACT (form -> Apps Script) ===== -->
+<!-- ===== INQUIRY FORM (posts to the /api/inquiry Pages Function) ===== -->
 <section id="contact" class="sec">
   <div class="wrap">
     <div class="contact-shell">
@@ -1474,7 +1476,7 @@ section{position:relative}
       <div class="contact-aside" data-aos="fade-right">
         <span class="eyebrow">Get in Touch</span>
         <h2>Send Us a <span class="r">Message</span></h2>
-        <p>Questions about memberships, class blocks or personal training? Send a note and we'll get back to you during staffed hours. Prefer to talk it through? Give the front desk a call.</p>
+        <p>Questions about memberships, classes, or tanning? Send a note and you will get a reply straight from Randy, the owner.</p>
         <div class="contact-direct">
           <div class="cd-row">
             <span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></span>
@@ -1493,9 +1495,11 @@ section{position:relative}
 
       <div class="contact-card" data-aos="fade-left">
         <!-- status region lives above the fields so the result is announced and seen -->
+        <!-- Success replaces the form in place; the error sits above it so the
+             fields (and whatever the visitor typed) survive a failed send. -->
         <div class="cf-result ok" id="cf-ok" role="status" aria-live="polite">
           <svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg>
-          <span><b>Message sent</b>Thanks for reaching out. We'll get back to you during staffed hours.</span>
+          <span>Thanks! Your message is on its way. Randy will get back to you soon.</span>
         </div>
         <div class="cf-result bad" id="cf-bad" role="alert">
           <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
@@ -1539,9 +1543,19 @@ section{position:relative}
             <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
+          <!-- TODO(turnstile): swap data-sitekey for the real Cloudflare Turnstile
+               site key before launch. 1x00000000000000000000AA is Cloudflare's
+               universal TEST key: it always passes and proves nothing. The paired
+               test secret lives in functions/api/inquiry.js env notes. -->
+          <div class="cf-turnstile-wrap">
+            <div class="cf-turnstile" id="cf-turnstile"
+                 data-sitekey="1x00000000000000000000AA"
+                 data-action="inquiry" data-theme="light"></div>
+          </div>
+
           <div class="cf-actions">
             <button type="submit" class="btn btn-red cf-submit" id="cf-submit">
-              <span id="cf-submit-label">Send Message</span>
+              <span id="cf-submit-label">Send My Message</span>
             </button>
             <p class="cf-privacy">We never share your information.</p>
           </div>
@@ -1749,12 +1763,8 @@ section{position:relative}
 (function(){
   'use strict';
 
-  /* ============================================================
-     CONTACT FORM ENDPOINT
-     Paste the Apps Script Web App URL here after deploying
-     /apps-script/Code.gs (see /apps-script/README.md).
-     ============================================================ */
-  var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyMmiBeua_GRrmKiTDFb-zjY54NY29VMbqaJZkafdgB8mi2jIkHdMN-ttxN4XOr10OdTw/exec';
+  /* The inquiry form posts to /api/inquiry, served by the Pages Function in
+     functions/api/inquiry.js. Same origin, so no CORS and no secrets here. */
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1902,7 +1912,7 @@ section{position:relative}
       layout();
     })();
 
-    /* ---- contact form -> Apps Script ---- */
+    /* ---- inquiry form -> /api/inquiry ---- */
     (function(){
       var form = document.getElementById('contact-form');
       if(!form) return;
@@ -1977,7 +1987,7 @@ section{position:relative}
         status = next;
         var sending = next === 'submitting';
         submit.disabled = sending;
-        label.textContent = sending ? 'Sending…' : 'Send Message';
+        label.textContent = sending ? 'Sending…' : 'Send My Message';
         var spin = submit.querySelector('.cf-spin');
         if(sending && !spin){
           spin = document.createElement('span');
@@ -1993,13 +2003,22 @@ section{position:relative}
         badBanner.classList.toggle('show', kind === 'bad');
       }
 
-      function resetForm(){
-        Object.keys(FIELDS).forEach(function(key){
-          formData[key] = '';
-          var el = document.getElementById(FIELDS[key].input);
-          if(el) el.value = '';
-          setFieldError(key, false);
-        });
+      /* Success swaps the form out for the confirmation, so the visitor cannot
+         double-submit and the card does not sit there looking unsent. */
+      function replaceFormWithSuccess(){
+        form.hidden = true;
+        showResult('ok');
+        okBanner.setAttribute('tabindex', '-1');
+        okBanner.focus();
+      }
+
+      /* Turnstile hands its token to a hidden input it injects into the form. */
+      function turnstileToken(){
+        var el = form.querySelector('[name="cf-turnstile-response"]');
+        return el ? el.value : '';
+      }
+      function resetTurnstile(){
+        try { if(window.turnstile) window.turnstile.reset('#cf-turnstile'); } catch(err){}
       }
 
       form.addEventListener('submit', function(e){
@@ -2017,32 +2036,53 @@ section{position:relative}
 
         setStatus('submitting');
 
-        /* No Content-Type header on purpose. Unset makes the browser send
-           text/plain;charset=UTF-8 — a CORS-simple request, so there is no
-           preflight. Apps Script does not answer OPTIONS preflights, so
-           setting application/json here would break the submission. */
-        fetch(FORM_ENDPOINT, {
+        var payload = {
+          name:    formData.name.trim(),
+          email:   formData.email.trim(),
+          phone:   formData.phone.trim(),
+          message: formData.message.trim(),
+          website: formData.website,               /* honeypot, server decides */
+          turnstileToken: turnstileToken()
+        };
+
+        fetch('/api/inquiry', {
           method: 'POST',
-          body: JSON.stringify(formData)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         })
         .then(function(res){
-          if(!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json();
+          return res.json().catch(function(){ throw new Error('Bad JSON'); })
+            .then(function(data){
+              if(!res.ok || !data || data.ok !== true){
+                throw new Error((data && data.error) || ('HTTP ' + res.status));
+              }
+              return data;
+            });
         })
-        .then(function(data){
-          if(!data || data.ok !== true) throw new Error(data && data.message || 'Rejected');
+        .then(function(){
           setStatus('idle');
-          resetForm();
-          showResult('ok');
+          replaceFormWithSuccess();
+          if(typeof window.gtag === 'function'){
+            window.gtag('event', 'generate_lead', {
+              form_id: 'inquiry',
+              form_destination: '/api/inquiry'
+            });
+          }
         })
         .catch(function(){
           setStatus('idle');
+          resetTurnstile();
           showResult('bad');
+          badBanner.setAttribute('tabindex', '-1');
+          badBanner.focus();
         });
       });
     })();
   });
 })();
 </script>
+
+<!-- Turnstile: loaded last, async, and only used by the inquiry form (§20) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>
