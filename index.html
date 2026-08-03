@@ -436,10 +436,16 @@ section{position:relative}
 
 #mobile-menu{
   position:fixed;inset:0;background:rgba(12,12,12,.98);z-index:1050;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
   gap:var(--sp-5);opacity:0;visibility:hidden;   /* visibility prevents ghost-tabbing (§14) */
   transition:opacity var(--dur-slow) var(--ease-out),visibility var(--dur-slow);
+  overflow-y:auto;padding:var(--sp-6) 0;
 }
+/* Auto margins centre the list when it fits and collapse when it does not, so
+   a short viewport scrolls instead of clipping the first and last items the
+   way justify-content:center would. */
+#mobile-menu a:first-of-type{margin-top:auto}
+#mobile-menu a:last-of-type{margin-bottom:auto}
 #mobile-menu.open{opacity:1;visibility:visible}
 #mobile-menu a{
   font-family:var(--font-display);font-size:var(--fs-xl);color:var(--n-0);
@@ -448,6 +454,8 @@ section{position:relative}
 }
 #mobile-menu a:hover{color:var(--red-400)}
 #mobile-menu .mm-join{color:var(--red-400)}
+#mobile-menu .mm-phone{gap:var(--sp-3);font-size:var(--fs-lg);color:var(--color-on-inverse-secondary)}
+#mobile-menu .mm-phone:hover{color:var(--n-0)}
 
 /* ============================================================
    HERO — asymmetric, single static image (§2)
@@ -1113,6 +1121,9 @@ section{position:relative}
   <a href="#contact">Contact</a>
   <a href="#faq">FAQ</a>
   <a href="#join" class="mm-join">Join Now</a>
+  <!-- The header phone is hidden under 1080px, so the number lives here on
+       mobile. The FAB is the primary action; calling stays one tap away. -->
+  <a href="tel:+17152561459" class="mm-phone"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg> 715-256-1459</a>
 </div>
 
 <main id="main">
