@@ -34,19 +34,20 @@
 
 <!-- ============================================================
      ANALYTICS
-     Both IDs are placeholders. Sits after the preloads so the LCP
-     hero keeps priority; both tags load async and block nothing.
+     GA4 is live; the Clarity ID is still a placeholder. Sits after the
+     preloads so the LCP hero keeps priority; both tags load async and
+     block nothing.
 
-     TODO(analytics): replace G-XXXXXXXXXX with the real GA4 measurement ID
-     (both occurrences), then in GA4 mark generate_lead and click_to_call as
-     Key Events so they count as conversions.
+     TODO(analytics): in GA4, mark generate_lead and click_to_call as Key
+     Events so they count as conversions.
      ============================================================ -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B1SR5W2W74"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-B1SR5W2W74');
 </script>
 
 <!-- TODO(analytics): replace CLARITY_PROJECT_ID with the real Microsoft
